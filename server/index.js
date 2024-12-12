@@ -7,15 +7,16 @@ const schema = require("./schema/schema");
 const connectDB = require("./config/db")
 const port = process.env.PORT || 5000;
 
-const app = express();
+module.exports = async (req, res) => {
+  const app = express();
+  await connectDB();
 
-connectDB()
+  app.use(cors());
 
-app.use(cors())
+  app.use("/graphql", graphqlHTTP({
+    schema,
+    graphiql: false
+  }));
 
-app.use("/graphql", graphqlHTTP({
-  schema,
-  graphiql: process.env.NODE_ENV === "development"
-}));
-
-app.listen(port, console.log(port));
+  app(req, res);
+};
