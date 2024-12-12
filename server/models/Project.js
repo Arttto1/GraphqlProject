@@ -1,5 +1,4 @@
 const mongoose = require("mongoose")
-const { description } = require("../schema/schema")
 
 const ProjectSchema = new mongoose.Schema({
   name: {
